@@ -5,6 +5,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const commonConfig = require('./webpack.common.config');
 
 const devConfig = {
+    mode: 'development',
     devtool: 'inline-source-map',
     entry: {
         app: [

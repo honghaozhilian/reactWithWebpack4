@@ -17,7 +17,7 @@ const prodConfig = {
                     options: {
                         limit: 18,
                         name: '[name].[hash:8].[ext]',
-                        publicPath: '../images/',
+                        publicPath: '/static/images/',
                         outputPath: 'static/images/'
                     },
                 }],
