@@ -27,13 +27,18 @@ module.exports = {
                         cacheDirectory: true,
                     }
                 }],
-
+                exclude: /node_modules/,
                 include: path.join(__dirname,'src'),
                 
             },
         ]
     },
     resolve: {
+        extensions: ['.js','.json'],
+        modules: [ // 优化模块查找路径
+            path.join(__dirname, 'src'),
+            path.join(__dirname, 'node_modules')// 指定node_modules所在位置 当你import 第三方模块时 直接从这个路径下搜索寻找
+        ],
         alias: {
             pages: path.join(__dirname, 'src/pages'),
             components: path.join(__dirname, 'src/components'),

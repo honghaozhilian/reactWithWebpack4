@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const merge = require('webpack-merge');
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const commonConfig = require('./webpack.common.config');
 
 const devConfig = {
@@ -20,7 +20,7 @@ const devConfig = {
     devServer: {
         contentBase: path.join(__dirname,'./dist'),
         // host: 'localhost',
-        port: 8080,
+        port: 8088,
         compress: true,
         historyApiFallback: true,
         hot: true,
@@ -40,7 +40,23 @@ const devConfig = {
                         limit: 18,
                         name: '[name].[hash:8].[ext]',
                     },
-                }]
+                }],
+                exclude: /node_modules/, 
+                include: path.join(__dirname,'src'),
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                    },
+                    {
+                        loader: 'css-loader',
+                    },{
+                        loader: 'postcss-loader'
+                    },
+                ],
+                include: /node_modules/
             },
             {
                 test: /\.css$/,
@@ -58,7 +74,9 @@ const devConfig = {
                     },{
                         loader: 'postcss-loader'
                     },
-                ]
+                ],
+                exclude: /node_modules/,
+                include: path.join(__dirname,'src'),
             },
             {
                 test: /\.scss$/,
@@ -79,7 +97,9 @@ const devConfig = {
                         loader: 'sass-loader'
                     },
                     
-                ]
+                ],
+                exclude: /node_modules/, 
+                include: path.join(__dirname,'src'),
             }
         ]
     },
@@ -88,7 +108,7 @@ const devConfig = {
             MOCK: true
         }),
         new webpack.HotModuleReplacementPlugin(),
-        
+        new BundleAnalyzerPlugin()
     ]
 };
 

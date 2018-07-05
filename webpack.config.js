@@ -3,7 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const commonConfig = require('./webpack.common.config');
 const prodConfig = {
     mode: 'production',
@@ -20,13 +20,29 @@ const prodConfig = {
                         publicPath: '../images/',
                         outputPath: 'static/images/'
                     },
-                }]
+                }],
+                exclude: /node_modules/, 
+                include: path.join(__dirname,'src'),
             },
             {
                 test: /\.css$/,
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader,
+                    },
+                    {
+                        loader: 'css-loader',
+                    },{
+                        loader: 'postcss-loader'
+                    },
+                ],
+                include: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader',
                     },
                     {
                         loader: 'css-loader',
@@ -38,7 +54,9 @@ const prodConfig = {
                     },{
                         loader: 'postcss-loader'
                     },
-                ]
+                ],
+                exclude: /node_modules/,
+                include: path.join(__dirname,'src'),
             },
             {
                 test: /\.scss$/,
@@ -59,7 +77,9 @@ const prodConfig = {
                         loader: 'sass-loader'
                     },
                     
-                ]
+                ],
+                exclude: /node_modules/, 
+                include: path.join(__dirname,'src'),
             },
         ]
     },
@@ -68,6 +88,9 @@ const prodConfig = {
         new MiniCssExtractPlugin({
             filename: 'static/css/[name].[hash].css',
             chunkFilename: 'static/css/[name][id].[hash].css',
+        }),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static'
         })
     ]
 };

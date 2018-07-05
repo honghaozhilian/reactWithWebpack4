@@ -4,7 +4,7 @@ import getRouter from './router/router';
 import {Provider} from 'react-redux';
 import {AppContainer} from 'react-hot-loader';
 import store from './store';
-
+import 'antd/dist/antd.min.css';
 renderWithHotReload(getRouter())
 
 if (module.hot) {
