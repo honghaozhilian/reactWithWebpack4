@@ -6,18 +6,16 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            count: 0
+            count: 1
         }
     }
-
     _handleClick() {
         this.props.increment();
-        console.log(this.props.counter)
     }
     render() {
         return (
             <div>
-                this is home~计数页面<br/>
+                this is home~计数页面gaiba<br/>
                 当前计数值：{this.props.counter.count}<br/>
                 <button onClick={() => this._handleClick()}>自增</button>
             </div>

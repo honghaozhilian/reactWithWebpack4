@@ -5,7 +5,7 @@ import {INCREMENT, DECREMENT, RESET} from './action';
  */
 
 const initState = {
-    count: 0
+    count: 1
 };
 /*
 * reducer

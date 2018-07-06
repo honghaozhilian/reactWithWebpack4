@@ -1,7 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 const webpack = require('webpack');
+const HappyPack = require('happypack');
+const os = require('os');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
     devtool: 'cheap-module-source-map',
@@ -21,12 +23,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                use: [{
-                    loader: 'babel-loader',
-                    options: {
-                        cacheDirectory: true,
-                    }
-                }],
+                loader: 'happypack/loader?id=happyBabel',
                 exclude: /node_modules/,
                 include: path.join(__dirname,'src'),
                 
@@ -57,6 +54,12 @@ module.exports = {
             filename: 'index.html',
             template: path.join(__dirname, 'src/index.html')
         }),
-        
+        new HappyPack({ // 基础参数设置
+            id: 'happyBabel', // 上面loader?后面指定的id
+            loaders: ['babel-loader?cacheDirectory'], // 实际匹配处理的loader
+            threadPool: happyThreadPool,
+            // cache: true, // 已被弃用
+            verbose: true
+        })
     ]
 };
